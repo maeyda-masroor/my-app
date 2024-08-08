@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import React, { FC } from 'react';
+import NewContact from './components/NewContact';
+import ForgetPassword from './auth/ForgetPassword';
+import {Routes,Route} from 'react-router-dom';
+import Login from './auth/Login';
+import TermofUse from './auth/TermOfUse';
+import PrivacyPolicy from './auth/PrivacyPolicy';
+import Register from './auth/Register';
+import Navbar from './components/Navbar';
+import Loading from './components/Loading'
+import { useState,useEffect } from 'react';
+import Recover from './auth/Recover';
 function App() {
+  const [loading, setLoading] = useState(true)
+    useEffect(() => {
+        setTimeout(() => setLoading(false), 3300)
+    }, [])
+    if (loading) {
+        return <Loading/>
+    }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+    <Navbar/>
+    <Routes>
+      <Route path="/newContact" element={<NewContact />} />
+      <Route path='/' element={<Login/>}/>
+      <Route path='/forgetPassword' element={<ForgetPassword/>}/>
+      <Route path='/termofUse' element={<TermofUse/>}/>
+      <Route path='/privacypolicy' element={<PrivacyPolicy/>}/>
+      <Route path='/recover' element={<Recover/>}/>
+      <Route path='/register' element={<Register/>}/>
+    </Routes>
     </div>
   );
 }
