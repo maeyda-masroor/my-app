@@ -5,18 +5,18 @@ import { PoweroffOutlined } from '@ant-design/icons';
 import PhoneInput2 from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import styled from 'styled-components';
 import Image from './retentionCRM.jpeg';
-import flags from 'react-phone-number-input/flags'
 import { useState } from 'react';
 import { Form, Input, Button, Row, Col, Layout ,Space, Checkbox} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 const LoginForm = () => {
   const [loadings, setLoadings] = useState<boolean[]>([]);
-  const [value, setValue] = useState<string | undefined>()
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>();
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
   const [showInputA, setShowInputA] = useState(false);
   const [showInputB, setShowInputB] = useState(false);
@@ -35,16 +35,23 @@ const LoginForm = () => {
       });
     }, 6000);
   };
-  const onChange = (e:any) => {
-    setChecked(e.target.checked);
+  const handleChange = (event:any) => {
+    switch (event.target.name) {
+      case "emails":
+        setUserName(event.target.value);
+        break;
+      case "phone":
+        setPhoneNumber(event.target.value);
+        break;
+    }
   };
   const handleLinkClick = (linkType: string) => {
     setShowInputA(linkType === 'linkA');
     setShowInputB(linkType === 'linkB');
   };
   const {t} = useTranslation(["locale"]);
+  const emailReg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   const SocialButton = styled.button`
   border-radius: 50%;
   width: 30px;
@@ -68,82 +75,77 @@ const HorizontalLineContainer = styled.div`
     background-color: black;
     margin: 10px 0;
   `;
-  const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const [form] = Form.useForm()
   return (
-    <Layout style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <Layout style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' ,backgroundColor:'white'}}>
       <div>
-      <div className="paraStyle">
-                {t("line1", {ns: ['main','home']})} <br/>
-                {t("line2", {ns: ['main','home']})} <br/>
-                {t("line3", {ns: ['main','home']})} <br/>
-      </div>
      </div>
-      <img src = {Image} />
-      <br/>
-      <h1 style={{fontFamily:'Serif'}}>Log in to Your Account</h1>
-      <Form
+      <img src = {Image} width={200} height={50}/>
+      <h1 style={{fontFamily:'fantasy'}}> {t("login_title", {ns: ['main','home']})}</h1>
+      <Form form={form}
         layout="vertical"
-        style={{ width: '300px' }}
+        style={{ width: '500px' }}
       >
        {showInputA && (
-       <Form.Item label="Username" name="username"
-        rules={[
-          {
-            type: 'email',   
-
-            message: 'Please enter a valid email',
-          },
-            {
-              pattern: emailRegex,
-              message: 'Please enter a valid email address', // More specific message
-            },
-            {
-              required: true,
-              message : 'Feild is required' 
-            }
-        ]}
-        >
-        <Input prefix={<UserOutlined />} placeholder="Username" />
-        </Form.Item>
+       <Form.Item label={t("email",{ns:['main','home']})} name="emails" style={{fontFamily:'fantasy',height:50}}
+       rules={
+        [{
+          pattern:emailReg,
+          message: t("invalid_email",{ns:['main','home']}),
+       },
+        {
+          required:true,
+          message: t("req_email",{ns:['main','home']}),
+        }
+      ]}  
+      >
+      <Input prefix={<UserOutlined style={{color:'#4d7de1'}}/>} placeholder= {t("email",{ns:['main','home']})} onChange={handleChange} name='email' style={{fontFamily:'fantasy',height:'50px'}}/>
+      </Form.Item>
        )}
+       <br/>
        {showInputB && (
-       <Form.Item label="Phone number">
+       <Form.Item label={t("phonenumber",{ns:['main','home']})} style={{fontFamily:'fantasy',height:50}}>
        <PhoneInput2
-        placeholder="Enter phone number"
-        value={value}
-        onChange={setValue}
+        placeholder={t("phonenumber",{ns:['main','home']})}
+        value={phoneNumber}
+        onChange={handleChange}
         enableAreaCodes={true}
         inputProps={{
           name: "phone",
           required: true,
-          autoFocus: true
+          autoFocus: true,
+        }}
+        inputStyle={{
+          width:'500px',
+          height:'50px',
         }}
         />
        </Form.Item>
        )}
-      <a onClick={() => handleLinkClick('linkA')}>Use Email</a>
+      <a onClick={() => handleLinkClick('linkA')} style={{fontFamily:'fantasy'}}>{t("use_email", {ns: ['main','home']})}</a>
       <br/>
-      <a onClick={() => handleLinkClick('linkB')}>Use Phone Number</a>
-        <Form.Item label="Password" name="password"
+      <a onClick={() => handleLinkClick('linkB')} style={{fontFamily:'fantasy'}}>{t("use_phonenumber", {ns: ['main','home']})}</a>
+        <Form.Item label={t("password",{ns:['main','home']})} name="password"
         rules={[
             {
               pattern: passwordRegex,
-              message: 'Password Should contain small letter , Capital letter , character and should be at least 8 character long', // More specific message
-            },
+              message: t("password_regex",{ns:['main','home']})
+              },
             {
               required: true,
-              message : 'Feild is required' 
+              message : t("password_req",{ns:['main','home']})
             }
         ]}
         >
-        <Input.Password prefix={<LockOutlined/>}
-        placeholder="input password"
-        iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+        <Input.Password prefix={<LockOutlined style={{color:'#4d7de1'}}/>}
+        placeholder={t("password",{ns:['main','home']})}
+        iconRender={(visible) => (visible ? <EyeTwoTone style={{color:'#4d7de1'}}/> : <EyeInvisibleOutlined style={{color:'#4d7de1'}}/>)} onChange={handleChange} name='password'
+
       />
       </Form.Item>
       <Form.Item>
-      <Checkbox onChange={onChange} checked={checked}>   
-        Remember me
+      <Checkbox onChange={handleChange} checked={checked} style={{fontFamily:'fantasy',color:'#4d7de1'}} name='rememberme'>   
+      {t("rememberMe",{ns:['main','home']})}
       </Checkbox>
       </Form.Item>
       <Form.Item>
@@ -154,32 +156,32 @@ const HorizontalLineContainer = styled.div`
           onClick={() => enterLoading(1)}
           style={{width:'100%'}}
         >
-          Log In
+        {t("Login",{ns:['main','home']})}
         </Button>
       </Form.Item>
-      <div><center><p>Forget Password? <Link to="/forgetPassword">Send Passcode</Link></p></center>
-      <center><Link to ="/recover">Reset Password Now</Link></center>
+      <div><center><p>{t("ForgetPasscode",{ns:['main','home']})}<Link to="/forgetPassword">{t("sendPasscode",{ns:['main','home']})}</Link></p></center>
+      <center><Link to ="/recover">{t("resetPasswordNow",{ns:['main','home']})}</Link></center>
       <HorizontalLineContainer>
       <HorizontalLine />
-      <span style={{ padding: '0 10px' }}>Or</span>
+      <span style={{ padding: '0 10px' }}>{t("or",{ns:['main','home']})}</span>
       <HorizontalLine />
     </HorizontalLineContainer>
       </div>
       <div style={{ marginTop: '10px' }}>
-      <div style={{display:'flex',gap:'2px',marginLeft:'95px'}}>
+      <div style={{display:'flex',gap:'2px',marginLeft:'200px'}}>
       <SocialButton>
-        <FaFacebook size={32} color="#3b5998" />
+        <FaFacebook size={50} color="#3b5998" />
       </SocialButton>
       <SocialButton>
-        <FaTwitter size={32} color="#1da1f2" />
+        <FaTwitter size={50} color="#1da1f2" />
       </SocialButton>
       <SocialButton>
-        <FaInstagram size={32} color="#c13584" />
+        <FaInstagram size={50} color="#c13584" />
       </SocialButton>
     </div>
       </div>
       <hr/>
-      <center>Don't have Retention CRM account Yet <Link to='/register'>Register Now</Link></center>  
+      <center>{t("DontHaveAccount",{ns:['main','home']})}<Link to='/register'>{t("register_now",{ns:['main','home']})}</Link></center>  
       </Form>
     </Layout>
   );

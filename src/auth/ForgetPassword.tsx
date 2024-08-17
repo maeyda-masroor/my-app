@@ -5,11 +5,9 @@ import { PoweroffOutlined } from '@ant-design/icons';
 import PhoneInput2 from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import styled from 'styled-components';
 import Image from './retentionCRM.jpeg';
-import flags from 'react-phone-number-input/flags'
 import { useState } from 'react';
 import { Form, Input, Button, Row, Col, Layout ,Space, Checkbox} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -72,45 +70,35 @@ const HorizontalLineContainer = styled.div`
   return (
     <Layout style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div>
-      <div className="paraStyle">
-                {t("line1", {ns: ['main','home']})} <br/>
-                {t("line2", {ns: ['main','home']})} <br/>
-                {t("line3", {ns: ['main','home']})} <br/>
       </div>
-     </div>
-      <img src = {Image} />
+      <img src = {Image} width={200} height={50} />
       <br/>
-      <h1 style={{fontFamily:'Serif'}}>Get Passcode</h1>
-      <p>Enter your email address or phone number below, and we'll send you a one-time login password which you can use to login to this app.</p>
+      <h1 style={{fontFamily:'fantasy'}}>{t("getPasscode", {ns: ['main','home']})}</h1>
+      <p>{t("EnterYourEmail",{ns:['main','home']})}</p>
       <Form
         layout="vertical"
-        style={{ width: '300px' }}
+        style={{ width: '500px' }}
       >
        {showInputA && (
-       <Form.Item label="Username" name="username"
+       <Form.Item label= {t("email", {ns: ['main','home']})}name="email"
         rules={[
-          {
-            type: 'email',   
-
-            message: 'Please enter a valid email',
-          },
             {
               pattern: emailRegex,
-              message: 'Please enter a valid email address', // More specific message
+              message: t("invalid_email", {ns: ['main','home']}) // More specific message
             },
             {
               required: true,
-              message : 'Feild is required' 
+              message : t("req_email", {ns: ['main','home']})
             }
         ]}
         >
-        <Input prefix={<UserOutlined />} placeholder="Username" />
+        <Input prefix={<UserOutlined style={{color:'#4d7de1'}}/>} placeholder={t("email", {ns: ['main','home']})} />
         </Form.Item>
        )}
        {showInputB && (
-       <Form.Item label="Phone number">
+       <Form.Item label={t("phonenumber", {ns: ['main','home']})}>
        <PhoneInput2
-        placeholder="Enter phone number"
+        placeholder={t("phonenumber", {ns: ['main','home']})}
         value={value}
         onChange={setValue}
         enableAreaCodes={true}
@@ -122,9 +110,9 @@ const HorizontalLineContainer = styled.div`
         />
        </Form.Item>
        )}
-      <a onClick={() => handleLinkClick('linkA')}>Use Email</a>
+      <a onClick={() => handleLinkClick('linkA')}>{t("use_email", {ns: ['main','home']})}</a>
       <br/>
-      <a onClick={() => handleLinkClick('linkB')}>Use Phone Number</a>
+      <a onClick={() => handleLinkClick('linkB')}>{t("use_phonenumber", {ns: ['main','home']})}</a>
       <Form.Item>
       <Button
           type="primary"
@@ -133,34 +121,34 @@ const HorizontalLineContainer = styled.div`
           onClick={() => enterLoading(1)}
           style={{width:'100%'}}
         >
-          Send Passcode
+          {t("sendPasscode", {ns: ['main','home']})}
         </Button>
       </Form.Item>
-      <div><center><p><Link to="/">Use Password</Link>instead</p></center>
+      <div><center><p><Link to="/">{t("usePassword", {ns: ['main','home']})}</Link>{t("instead", {ns: ['main','home']})}</p></center>
       <hr/>
-      <center>Forget Password?<Link to ='/recover'>Reset Password Now</Link></center>
-      <center><p>Don't have a retention CRM account yet?<Link to ="/register">Register Now</Link></p></center>
+      <center><Link to ='/recover'>{t("forgetPassword", {ns: ['main','home']})}</Link></center>
+      <center><p>{t("DontHaveAccount",{ns:['main','home']})}<Link to ="/register">{t("registerNow", {ns: ['main','home']})}</Link></p></center>
       <HorizontalLineContainer>
       <HorizontalLine />
-      <span style={{ padding: '0 10px' }}>Or</span>
+      <span style={{ padding: '0 10px' }}>{t("Or", {ns: ['main','home']})}</span>
       <HorizontalLine />
     </HorizontalLineContainer>
       </div>
       <div style={{ marginTop: '10px' }}>
       <div style={{display:'flex',gap:'2px',marginLeft:'95px'}}>
       <SocialButton>
-        <FaFacebook size={32} color="#3b5998" />
+        <FaFacebook size={50} color="#3b5998" />
       </SocialButton>
       <SocialButton>
-        <FaTwitter size={32} color="#1da1f2" />
+        <FaTwitter size={50} color="#1da1f2" />
       </SocialButton>
       <SocialButton>
-        <FaInstagram size={32} color="#c13584" />
+        <FaInstagram size={50} color="#c13584" />
       </SocialButton>
     </div>
       </div>
       <hr/>
-      <center>Don't have Retention CRM account Yet <Link to='/register'>Register Now</Link></center>  
+      <center> <Link to='/register'>{t("login_title", {ns: ['main','home']})}</Link></center>  
       </Form>
     </Layout>
   );

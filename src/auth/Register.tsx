@@ -73,27 +73,17 @@ const HorizontalLineContainer = styled.div`
   return (
     <Layout style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div>
-      <div className="paraStyle">
-                {t("line1", {ns: ['main','home']})} <br/>
-                {t("line2", {ns: ['main','home']})} <br/>
-                {t("line3", {ns: ['main','home']})} <br/>
-      </div>
      </div>
-      <img src = {Image} />
+      <img src = {Image} width={200} height={50}/>
       <br/>
-      <h1 style={{fontFamily:'Serif'}}>Create Your Account</h1>
+      <h1 style={{fontFamily:'fantasy'}}>{t("createYourAccount", {ns: ['main','home']})}</h1>
       <Form
         layout="vertical"
-        style={{ width: '300px' }}
+        style={{ width: '500px' }}
       >
        {showInputA && (
        <Form.Item label="Username" name="username"
         rules={[
-          {
-            type: 'email',   
-
-            message: 'Please enter a valid email',
-          },
             {
               pattern: emailRegex,
               message: 'Please enter a valid email address', // More specific message

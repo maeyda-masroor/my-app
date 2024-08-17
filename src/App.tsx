@@ -19,7 +19,7 @@ function App() {
         return <Loading/>
     }
   return (
-    <div>
+    <div style={{backgroundColor:'white'}}>
     <Navbar/>
     <Routes>
       <Route path="/newContact" element={<NewContact />} />

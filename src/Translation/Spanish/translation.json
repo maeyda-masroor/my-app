@@ -1,5 +1,27 @@
 {
-    "line1": "An exciting scientific endeavor is space flight. People can learn more than they normally could.",
-    "line2": "Space exploration is a study of the cosmos. There are many aspects of the universe that we do not fully understand.",
-    "line3": "Astronauts visit space and report back to us on their experiences there."
+    "login_title":"Inicie sesión en su cuenta",
+    "use_email":"usar correo electrónico",
+    "use_phonenumber":"usar el número de teléfono",
+    "password":"contraseña",
+    "rememberMe":"Acuérdate de mí",
+    "Login":"acceso",
+    "ForgetPasscode":"olvidé mi contraseña",
+    "sendPasscode":"enviar contraseña",
+    "resetPasswordNow":"restablecer contraseña ahora",
+    "or":"o",
+    "DontHaveAccount":"Aún no tengo una cuenta de CRM de retención   ",
+    "register_now":"regístrate ahora",
+    "email":"correo electrónico",
+    "phonenumber":"número de teléfono",
+    "invalid_email":"correo electrónico no válido",
+    "req_email":"se requiere correo electrónico",
+    "password_regex":"Password Should contain small letter , Capital letter , character and should be at least 8 character long",
+    "req_password":"Password is required",
+    "createYourAccount":"crea tu cuenta",
+    "getPasscode":"obtener contraseña",
+    "EnterYourEmail":"Ingrese su dirección de correo electrónico o número de teléfono a continuación y le enviaremos una contraseña de inicio de sesión única que podrá usar para iniciar sesión en esta aplicación.",
+    "forgetPassword":"oublier le mot de passe",
+    "registerNow":"regístrate ahora",
+    "instead":"en cambio"
+
 }

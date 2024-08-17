@@ -9,11 +9,11 @@ const Navbar = () => {
         i18n.changeLanguage(language); //change the language
     }
 	return (
-		<div style={{backgroundColor:'white',color:'black',width:'100%',height:'50px',top:'0px',}}>
-       	<select className="custom-select" style={{width: 200}} onChange={onClickLanguageChange}>
-        <option value="en" >English</option>
-        <option value="es" >Spanish</option>
-        <option value="fr" >French</option>
+		<div style={{backgroundColor:'white',color:'black',width:'100%',height:'55px',top:'0px',}}>
+       	<select className="custom-select" style={{width: 200,height:50,float:'right',margin:'1px',backgroundColor:'#4d7de1'}} onChange={onClickLanguageChange}>
+        <option value="en" style={{fontFamily:'fantasy'}}>English</option>
+        <option value="es" style={{fontFamily:'fantasy'}}>Spanish</option>
+        <option value="fr" style={{fontFamily:'fantasy'}}>French</option>
         </select>
 	  	</div>
 		
