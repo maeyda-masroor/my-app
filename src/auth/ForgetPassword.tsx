@@ -73,7 +73,7 @@ const HorizontalLineContainer = styled.div`
       </div>
       <img src = {Image} width={200} height={50} />
       <br/>
-      <h1 style={{fontFamily:'fantasy'}}>{t("getPasscode", {ns: ['main','home']})}</h1>
+      <h1 style={{fontFamily:'inherit'}}>{t("getPasscode", {ns: ['main','home']})}</h1>
       <p>{t("EnterYourEmail",{ns:['main','home']})}</p>
       <Form
         layout="vertical"

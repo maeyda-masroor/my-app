@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { useTranslation } from "react-i18next";
 import { Link } from 'react-router-dom';
@@ -9,42 +10,45 @@ import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import styled from 'styled-components';
 import Image from './retentionCRM.jpeg';
 import { useState } from 'react';
+import { FormEvent } from "react";
 import { Form, Input, Button, Row, Col, Layout ,Space, Checkbox} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 const LoginForm = () => {
   const [loadings, setLoadings] = useState<boolean[]>([]);
-  const [phoneNumber, setPhoneNumber] = useState<string | undefined>();
-  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string|undefined>();
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
   const [showInputA, setShowInputA] = useState(false);
   const [showInputB, setShowInputB] = useState(false);
-  const enterLoading = (index: number) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
-    
-    setTimeout(() => {
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
+  const [formData, setFormData] = useState({
+    email: '',
+    phoneNumber: '',
+    password: '',
+    checked:false
+  });
+  const handleChange = (e:any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value   
+ });
+  };
+  const handleSubmit = async (e:any) => {
+    e.preventDefault();
+    //try {
+      const dataString = JSON.stringify(formData); // Convert data to string
+      console.log(dataString)
+      /*const response = await axios.post('/your-api-endpoint', dataString, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
-    }, 6000);
+      console.log('Data sent successfully:', response.data);
+    } catch (error) {
+      console.error('Error sending data:', error);
+    }*/
+
   };
-  const handleChange = (event:any) => {
-    switch (event.target.name) {
-      case "emails":
-        setUserName(event.target.value);
-        break;
-      case "phone":
-        setPhoneNumber(event.target.value);
-        break;
-    }
-  };
+
   const handleLinkClick = (linkType: string) => {
     setShowInputA(linkType === 'linkA');
     setShowInputB(linkType === 'linkB');
@@ -82,12 +86,12 @@ const HorizontalLineContainer = styled.div`
      </div>
       <img src = {Image} width={200} height={50}/>
       <h1 style={{fontFamily:'fantasy'}}> {t("login_title", {ns: ['main','home']})}</h1>
-      <Form form={form}
+      <Form form={form} 
         layout="vertical"
         style={{ width: '500px' }}
       >
        {showInputA && (
-       <Form.Item label={t("email",{ns:['main','home']})} name="emails" style={{fontFamily:'fantasy',height:50}}
+       <Form.Item label={t("email",{ns:['main','home']})} name="email" style={{fontFamily:'fantasy',height:50}}
        rules={
         [{
           pattern:emailReg,
@@ -99,15 +103,15 @@ const HorizontalLineContainer = styled.div`
         }
       ]}  
       >
-      <Input prefix={<UserOutlined style={{color:'#4d7de1'}}/>} placeholder= {t("email",{ns:['main','home']})} onChange={handleChange} name='email' style={{fontFamily:'fantasy',height:'50px'}}/>
+      <Input prefix={<UserOutlined style={{color:'#4d7de1'}}/>} placeholder= {t("email",{ns:['main','home']})} onChange={handleChange} value={formData.email} style={{fontFamily:'fantasy',height:'50px'}}/>
       </Form.Item>
        )}
        <br/>
        {showInputB && (
-       <Form.Item label={t("phonenumber",{ns:['main','home']})} style={{fontFamily:'fantasy',height:50}}>
+       <Form.Item label={t("phonenumber",{ns:['main','home']})} style={{fontFamily:'fantasy',height:50}} name="phoneNumber">
        <PhoneInput2
         placeholder={t("phonenumber",{ns:['main','home']})}
-        value={phoneNumber}
+        value={formData.phoneNumber}
         onChange={handleChange}
         enableAreaCodes={true}
         inputProps={{
@@ -137,14 +141,14 @@ const HorizontalLineContainer = styled.div`
             }
         ]}
         >
-        <Input.Password prefix={<LockOutlined style={{color:'#4d7de1'}}/>}
+        <Input.Password prefix={<LockOutlined style={{color:'#4d7de1'}} value={formData.password}/>}
         placeholder={t("password",{ns:['main','home']})}
         iconRender={(visible) => (visible ? <EyeTwoTone style={{color:'#4d7de1'}}/> : <EyeInvisibleOutlined style={{color:'#4d7de1'}}/>)} onChange={handleChange} name='password'
 
       />
       </Form.Item>
       <Form.Item>
-      <Checkbox onChange={handleChange} checked={checked} style={{fontFamily:'fantasy',color:'#4d7de1'}} name='rememberme'>   
+      <Checkbox onChange={handleChange}  style={{fontFamily:'fantasy',color:'#4d7de1'}} name='rememberme' value={formData.checked}>   
       {t("rememberMe",{ns:['main','home']})}
       </Checkbox>
       </Form.Item>
@@ -153,8 +157,9 @@ const HorizontalLineContainer = styled.div`
           type="primary"
           icon={<PoweroffOutlined />}
           loading={loadings[1]}
-          onClick={() => enterLoading(1)}
+          onClick={handleSubmit}
           style={{width:'100%'}}
+          htmlType='submit'
         >
         {t("Login",{ns:['main','home']})}
         </Button>
