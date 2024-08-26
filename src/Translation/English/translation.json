@@ -22,5 +22,15 @@
     "EnterYourEmail":"Enter your email address or phone number below, and we'll send you a one-time login password which you can use to login to this app",
     "forgetPassword":"Forget Password",
     "registerNow":"Register Now",
-    "instead":"Instead"
+    "instead":"Instead",
+    "rememberMyPassword":"I remember my password",
+    "BtoLogin":"Back to Login",
+    "resetPassword":"Reset Password Now",
+    "usePassword":"Use password",
+    "agreetoterm":" I agree to RetentionCRM",
+    "and":"and",
+    "termofuse":"term of use",
+    "privacy_policy":"privacy and policy",
+    "sendPassword":"Send Password",
+    "enterPassword":"Enter the email address or phone number associated with your account, and we’ll help you reset your password."
 }

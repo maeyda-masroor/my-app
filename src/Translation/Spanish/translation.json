@@ -22,6 +22,17 @@
     "EnterYourEmail":"Ingrese su dirección de correo electrónico o número de teléfono a continuación y le enviaremos una contraseña de inicio de sesión única que podrá usar para iniciar sesión en esta aplicación.",
     "forgetPassword":"oublier le mot de passe",
     "registerNow":"regístrate ahora",
-    "instead":"en cambio"
+    "instead":"en cambio",
+    "rememberMyPassword":"Recuerdo mi contraseña",
+    "BtoLogin":"volver a iniciar sesión",
+    "resetPassword":"restablecer contraseña ahora",
+    "usePassword":"Usar contraseña",
+    "agreetoTerm":"Acepto RetenciónCRM",
+    "and":"y",
+    "termofuse":"término de uso",
+    "privacy_policy":"privacidad y política",
+    "enterPassword":"Ingrese la dirección de correo electrónico o el número de teléfono asociado con su cuenta y lo ayudaremos a restablecer su contraseña.",
+    "sendPassword":"enviar contraseña"
+
 
 }

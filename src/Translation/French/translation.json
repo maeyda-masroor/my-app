@@ -22,5 +22,15 @@
     "EnterYourEmail":"Entrez votre adresse e-mail ou votre numéro de téléphone ci-dessous et nous vous enverrons un mot de passe de connexion à usage unique que vous pourrez utiliser pour vous connecter à cette application.",
     "forgetPassword":"oublier le mot de passe",
     "registerNow":"inscrivez-vous maintenant",
-    "instead":"plutôt"
+    "instead":"plutôt",
+    "rememberMyPassword":"Je me souviens de mon mot de passe",
+    "BtoLogin":"retour à la connexion",
+    "resetPassword":"réinitialiser le mot de passe maintenant",
+    "usePassword":"Utiliser le mot de passe",
+    "agreetoTerm":"J'accepte RetentionCRM",
+    "and":"et",
+    "termofuse":"conditions d'utilisation",
+    "privacy_policy":"confidentialité et politique",
+    "enterPassword":"Entrez l'adresse e-mail ou le numéro de téléphone associé à votre compte et nous vous aiderons à réinitialiser votre mot de passe.",
+    "sendPassword":"envoyer le mot de passe"
 }

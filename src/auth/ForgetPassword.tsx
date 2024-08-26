@@ -13,26 +13,11 @@ import { Form, Input, Button, Row, Col, Layout ,Space, Checkbox} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 const LoginForm = () => {
-  const [loadings, setLoadings] = useState<boolean[]>([]);
-  const [value, setValue] = useState<string | undefined>()
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>();
+  const [email, setEmail] = useState<string | undefined>();
   const [checked, setChecked] = useState(false);
   const [showInputA, setShowInputA] = useState(false);
   const [showInputB, setShowInputB] = useState(false);
-  const enterLoading = (index: number) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
-    
-    setTimeout(() => {
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
-      });
-    }, 6000);
-  };
   const onChange = (e:any) => {
     setChecked(e.target.checked);
   };
@@ -40,8 +25,24 @@ const LoginForm = () => {
     setShowInputA(linkType === 'linkA');
     setShowInputB(linkType === 'linkB');
   };
+  const handleSubmit = () => {
+    try {
+    
+        let data = JSON.stringify({
+          email:email ,
+          phoneNumber: phoneNumber,
+       })
+        console.log(data);
+      }
+      catch(err){
+        console.log("something wrong")
+      }
+  };
+  const handleChangeEmail=(e:any)=>{
+    setEmail(e.target.value);
+};
+
   const {t} = useTranslation(["locale"]);
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   const SocialButton = styled.button`
   border-radius: 50%;
@@ -66,18 +67,21 @@ const HorizontalLineContainer = styled.div`
     background-color: black;
     margin: 10px 0;
   `;
-  const [passwordVisible, setPasswordVisible] = React.useState(false);
   return (
-    <Layout style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <Layout style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' , backgroundColor:'white' }}>
       <div>
       </div>
       <img src = {Image} width={200} height={50} />
       <br/>
+      <div style={{width:'500px'}}>
       <h1 style={{fontFamily:'inherit'}}>{t("getPasscode", {ns: ['main','home']})}</h1>
       <p>{t("EnterYourEmail",{ns:['main','home']})}</p>
+      </div>
       <Form
         layout="vertical"
         style={{ width: '500px' }}
+        autoComplete='on'
+        onFinish={handleSubmit}
       >
        {showInputA && (
        <Form.Item label= {t("email", {ns: ['main','home']})}name="email"
@@ -92,20 +96,24 @@ const HorizontalLineContainer = styled.div`
             }
         ]}
         >
-        <Input prefix={<UserOutlined style={{color:'#4d7de1'}}/>} placeholder={t("email", {ns: ['main','home']})} />
+        <Input prefix={<UserOutlined style={{color:'#4d7de1'}}/>} placeholder={t("email", {ns: ['main','home']})} onChange={handleChangeEmail} value={email} />
         </Form.Item>
        )}
        {showInputB && (
        <Form.Item label={t("phonenumber", {ns: ['main','home']})}>
        <PhoneInput2
         placeholder={t("phonenumber", {ns: ['main','home']})}
-        value={value}
-        onChange={setValue}
+        value={phoneNumber}
+        onChange={setPhoneNumber}
         enableAreaCodes={true}
         inputProps={{
           name: "phone",
           required: true,
           autoFocus: true
+        }}
+        inputStyle={{
+          height: '50px',
+          width:'100%'
         }}
         />
        </Form.Item>
@@ -117,9 +125,9 @@ const HorizontalLineContainer = styled.div`
       <Button
           type="primary"
           icon={<PoweroffOutlined />}
-          loading={loadings[1]}
-          onClick={() => enterLoading(1)}
           style={{width:'100%'}}
+          onClick={handleSubmit}
+          htmlType='submit'
         >
           {t("sendPasscode", {ns: ['main','home']})}
         </Button>
@@ -130,12 +138,12 @@ const HorizontalLineContainer = styled.div`
       <center><p>{t("DontHaveAccount",{ns:['main','home']})}<Link to ="/register">{t("registerNow", {ns: ['main','home']})}</Link></p></center>
       <HorizontalLineContainer>
       <HorizontalLine />
-      <span style={{ padding: '0 10px' }}>{t("Or", {ns: ['main','home']})}</span>
+      <span style={{ padding: '0 10px' }}>{t("or", {ns: ['main','home']})}</span>
       <HorizontalLine />
     </HorizontalLineContainer>
       </div>
       <div style={{ marginTop: '10px' }}>
-      <div style={{display:'flex',gap:'2px',marginLeft:'95px'}}>
+      <div style={{display:'flex',gap:'2px',marginLeft:'200px'}}>
       <SocialButton>
         <FaFacebook size={50} color="#3b5998" />
       </SocialButton>

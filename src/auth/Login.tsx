@@ -15,40 +15,37 @@ import { Form, Input, Button, Row, Col, Layout ,Space, Checkbox} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 const LoginForm = () => {
-  const [loadings, setLoadings] = useState<boolean[]>([]);
-  const [email, setEmail] = useState<string>("");
+  const [email,setemail] = useState<string|undefined>();
   const [phoneNumber, setPhoneNumber] = useState<string|undefined>();
-  const [password, setPassword] = useState("");
-  const [checked, setChecked] = useState(false);
+  const [password,setpassword] = useState<string|undefined>();
+  const [checked,setchecked] = useState<Boolean>(true);
+  const [loadings, setLoadings] = useState<boolean[]>([]);
   const [showInputA, setShowInputA] = useState(false);
   const [showInputB, setShowInputB] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    phoneNumber: '',
-    password: '',
-    checked:false
-  });
-  const handleChange = (e:any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value   
- });
+  const handleSubmit = () => {
+    try {
+    
+        let data = JSON.stringify({
+          email:email ,
+          phoneNumber: phoneNumber,
+          password: password,
+          checked:checked
+        })
+        console.log(data);
+      }
+      catch(err){
+        console.log("something wrong")
+      }
   };
-  const handleSubmit = async (e:any) => {
-    e.preventDefault();
-    //try {
-      const dataString = JSON.stringify(formData); // Convert data to string
-      console.log(dataString)
-      /*const response = await axios.post('/your-api-endpoint', dataString, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log('Data sent successfully:', response.data);
-    } catch (error) {
-      console.error('Error sending data:', error);
-    }*/
-
+  const handleChangeemail = (e:any) => {
+      setemail(e.target.value);
+  }
+  const handleChangepassword=(e:any)=>{
+      setpassword(e.target.value);
+  }
+  const handleChangeremeberme=(e:any)=>{
+      setchecked(e.target.value);
   };
-
   const handleLinkClick = (linkType: string) => {
     setShowInputA(linkType === 'linkA');
     setShowInputB(linkType === 'linkB');
@@ -79,19 +76,20 @@ const HorizontalLineContainer = styled.div`
     background-color: black;
     margin: 10px 0;
   `;
-  const [form] = Form.useForm()
   return (
     <Layout style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' ,backgroundColor:'white'}}>
       <div>
      </div>
       <img src = {Image} width={200} height={50}/>
-      <h1 style={{fontFamily:'fantasy'}}> {t("login_title", {ns: ['main','home']})}</h1>
-      <Form form={form} 
+      <h1 style={{fontFamily:'inherit'}}> {t("login_title", {ns: ['main','home']})}</h1>
+      <Form 
         layout="vertical"
+        onFinish={handleSubmit}
         style={{ width: '500px' }}
+        autoComplete='on'
       >
        {showInputA && (
-       <Form.Item label={t("email",{ns:['main','home']})} name="email" style={{fontFamily:'fantasy',height:50}}
+       <Form.Item label={t("email",{ns:['main','home']})} name="email" style={{fontFamily:'inherit',height:50}}
        rules={
         [{
           pattern:emailReg,
@@ -103,32 +101,31 @@ const HorizontalLineContainer = styled.div`
         }
       ]}  
       >
-      <Input prefix={<UserOutlined style={{color:'#4d7de1'}}/>} placeholder= {t("email",{ns:['main','home']})} onChange={handleChange} value={formData.email} style={{fontFamily:'fantasy',height:'50px'}}/>
+      <Input prefix={<UserOutlined style={{color:'#4d7de1'}}/>} placeholder= {t("email",{ns:['main','home']})} onChange={handleChangeemail} value={email} style={{fontFamily:'inherit',height:'50px'}}/>
       </Form.Item>
        )}
        <br/>
        {showInputB && (
-       <Form.Item label={t("phonenumber",{ns:['main','home']})} style={{fontFamily:'fantasy',height:50}} name="phoneNumber">
+       <Form.Item label={t("phonenumber",{ns:['main','home']})} style={{fontFamily:'inherit',height:50}} name="phoneNumber">
        <PhoneInput2
         placeholder={t("phonenumber",{ns:['main','home']})}
-        value={formData.phoneNumber}
-        onChange={handleChange}
-        enableAreaCodes={true}
-        inputProps={{
-          name: "phone",
-          required: true,
-          autoFocus: true,
-        }}
-        inputStyle={{
-          width:'500px',
-          height:'50px',
-        }}
+        value={phoneNumber}
+        onChange={setPhoneNumber}
+        inputStyle={
+          {
+            height:50,
+            fontFamily:'inherit',
+            width:'100%'
+
+          }
+        }
         />
        </Form.Item>
        )}
-      <a onClick={() => handleLinkClick('linkA')} style={{fontFamily:'fantasy'}}>{t("use_email", {ns: ['main','home']})}</a>
+      <a onClick={() => handleLinkClick('linkA')} style={{fontFamily:'inherit'}}>{t("use_email", {ns: ['main','home']})}</a>
       <br/>
-      <a onClick={() => handleLinkClick('linkB')} style={{fontFamily:'fantasy'}}>{t("use_phonenumber", {ns: ['main','home']})}</a>
+      <a onClick={() => handleLinkClick('linkB')} style={{fontFamily:'inherit'}}>{t("use_phonenumber", {ns: ['main','home']})}</a>
+      <br/>
         <Form.Item label={t("password",{ns:['main','home']})} name="password"
         rules={[
             {
@@ -141,14 +138,14 @@ const HorizontalLineContainer = styled.div`
             }
         ]}
         >
-        <Input.Password prefix={<LockOutlined style={{color:'#4d7de1'}} value={formData.password}/>}
+        <Input.Password prefix={<LockOutlined style={{color:'#4d7de1'}} value={password}/> }
         placeholder={t("password",{ns:['main','home']})}
-        iconRender={(visible) => (visible ? <EyeTwoTone style={{color:'#4d7de1'}}/> : <EyeInvisibleOutlined style={{color:'#4d7de1'}}/>)} onChange={handleChange} name='password'
-
+        iconRender={(visible) => (visible ? <EyeTwoTone style={{color:'#4d7de1'}}/> : <EyeInvisibleOutlined style={{color:'#4d7de1'}}/>)} onChange={handleChangepassword} name='password'
+        style={{fontFamily:'inherit',height:'50px'}}
       />
       </Form.Item>
       <Form.Item>
-      <Checkbox onChange={handleChange}  style={{fontFamily:'fantasy',color:'#4d7de1'}} name='rememberme' value={formData.checked}>   
+      <Checkbox onChange={handleChangeremeberme}  style={{fontFamily:'fantasy',color:'#4d7de1'}} name='rememberme' value={checked}>   
       {t("rememberMe",{ns:['main','home']})}
       </Checkbox>
       </Form.Item>

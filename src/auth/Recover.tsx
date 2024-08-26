@@ -17,25 +17,27 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 const LoginForm = () => {
   const [loadings, setLoadings] = useState<boolean[]>([]);
-  const [value, setValue] = useState<string | undefined>()
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>()
+  const [email, setEmail] = useState<string | undefined>()
   const [checked, setChecked] = useState(false);
   const [showInputA, setShowInputA] = useState(false);
   const [showInputB, setShowInputB] = useState(false);
-  const enterLoading = (index: number) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
+  const handleSubmit = () => {
+    try {
     
-    setTimeout(() => {
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
-      });
-    }, 6000);
+        let data = JSON.stringify({
+          email:email ,
+          phoneNumber: phoneNumber,
+        })
+        console.log(data);
+      }
+      catch(err){
+        console.log("something wrong")
+      }
   };
+  const handleChangeemail = (e:any) => {
+      setEmail(e.target.value);
+  }
   const onChange = (e:any) => {
     setChecked(e.target.checked);
   };
@@ -73,59 +75,53 @@ const HorizontalLineContainer = styled.div`
   return (
     <Layout style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div>
-      <div className="paraStyle">
-                {t("line1", {ns: ['main','home']})} <br/>
-                {t("line2", {ns: ['main','home']})} <br/>
-                {t("line3", {ns: ['main','home']})} <br/>
-      </div>
      </div>
       <img src = {Image} />
       <br/>
-      <h1 style={{fontFamily:'Serif'}}>Reset Password</h1>
-      <p>Enter the email address or phone number associated with your account, and we’ll help you reset your password.
-        </p><Form
+      <div style={{width:'500px'}}>
+      <h1 style={{fontFamily:'Inherit'}}>{t('resetPasswordNow',{ns:["main","home"]})}</h1>
+      <p>{t('enterPassword',{ns:["main","home"]})}</p>
+      </div>
+      <Form
         layout="vertical"
-        style={{ width: '300px' }}
+        style={{ width: '500px' }}
+        autoComplete='on'
+        onFinish={handleSubmit}
       >
        {showInputA && (
-       <Form.Item label="Username" name="username"
+       <Form.Item label={t('email',{ns:["main","home"]})} name="email"
         rules={[
           {
-            type: 'email',   
+            pattern: emailRegex,   
 
-            message: 'Please enter a valid email',
+            message: t('invalid_email',{ns:["main","home"]}),
           },
             {
-              pattern: emailRegex,
-              message: 'Please enter a valid email address', // More specific message
-            },
-            {
               required: true,
-              message : 'Feild is required' 
+              message : t('email_req',{ns:["main","home"]}) 
             }
         ]}
         >
-        <Input prefix={<UserOutlined />} placeholder="Username" />
+        <Input prefix={<UserOutlined />} placeholder="email" onChange={handleChangeemail} value={email} style={{height:'50px'}}/>
         </Form.Item>
        )}
        {showInputB && (
-       <Form.Item label="Phone number">
+       <Form.Item label={t('phoneNumber',{ns:["main","home"]})}>
        <PhoneInput2
-        placeholder="Enter phone number"
-        value={value}
-        onChange={setValue}
+        placeholder={t('phoneNumber',{ns:["main","home"]})}
+        value={phoneNumber}
+        onChange={setPhoneNumber}
         enableAreaCodes={true}
-        inputProps={{
-          name: "phone",
-          required: true,
-          autoFocus: true
+        inputStyle={{
+          height: '50px',
+          width: '100%',
         }}
         />
        </Form.Item>
        )}
-      <a onClick={() => handleLinkClick('linkA')}>Use Email</a>
+      <a onClick={() => handleLinkClick('linkA')}>{t('use_email',{ns:["main","home"]})}</a>
       <br/>
-      <a onClick={() => handleLinkClick('linkB')}>Use Phone Number</a>
+      <a onClick={() => handleLinkClick('linkB')}>{t('use_phoneNumber',{ns:["main","home"]})}</a>
       <Form.Item>
       <Form.Item>
       <ReCAPTCHA sitekey={'6LeYeyIqAAAAALhAsduh_njSFg0VRigkvNJdAWW8'} />
@@ -133,25 +129,25 @@ const HorizontalLineContainer = styled.div`
       <Button
           type="primary"
           icon={<PoweroffOutlined />}
-          loading={loadings[1]}
-          onClick={() => enterLoading(1)}
+          onClick={handleSubmit}
+          htmlType='submit'
           style={{width:'100%'}}
         >
-          Send Passcode
+          {t('sendPasscode',{ns:["main","home"]})}
         </Button>
       </Form.Item>
-      <div><center><p><Link to="/">Use Password</Link>instead</p></center>
+      <div><center><p><Link to="/">{t('sendPassword',{ns:["main","home"]})}</Link>{t('instead',{ns:["main","home"]})}</p></center>
       <hr/>
-      <center>Forget Password?<Link to ='/recover'>Reset Password Now</Link></center>
-      <center><p>Don't have a retention CRM account yet?<Link to ="/register">Register Now</Link></p></center>
+      <center>{t('forgetPassword',{ns:["main","home"]})}<Link to ='/recover'>{t('resetPassword',{ns:["main","home"]})}</Link></center>
+      <center><p>{t('DontHaveAccount',{ns:["main","home"]})}<Link to ="/register">{t('registerNow',{ns:["main","home"]})}</Link></p></center>
       <HorizontalLineContainer>
       <HorizontalLine />
-      <span style={{ padding: '0 10px' }}>Or</span>
+      <span style={{ padding: '0 10px' }}>{t('or',{ns:["main","home"]})}</span>
       <HorizontalLine />
     </HorizontalLineContainer>
       </div>
       <div style={{ marginTop: '10px' }}>
-      <div style={{display:'flex',gap:'2px',marginLeft:'95px'}}>
+      <div style={{display:'flex',gap:'2px',marginLeft:'200px'}}>
       <SocialButton>
         <FaFacebook size={32} color="#3b5998" />
       </SocialButton>
@@ -164,7 +160,7 @@ const HorizontalLineContainer = styled.div`
     </div>
       </div>
       <hr/>
-      <center>I Remember my Password <Link to='/'>Back to Login</Link></center>  
+      <center>{t('iremembermypassword',{ns:["main","home"]})} <Link to='/'>{t('BtoLogin',{ns:["main","home"]})}</Link></center>  
       </Form>
     </Layout>
   );
