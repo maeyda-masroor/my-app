@@ -96,7 +96,7 @@ const HorizontalLineContainer = styled.div`
             }
         ]}
         >
-        <Input prefix={<UserOutlined style={{color:'#4d7de1'}}/>} placeholder={t("email", {ns: ['main','home']})} onChange={handleChangeEmail} value={email} />
+        <Input prefix={<UserOutlined style={{color:'#4d7de1'}}/>} placeholder={t("email", {ns: ['main','home']})} onChange={handleChangeEmail} value={email} style={{height:'50px'}}/>
         </Form.Item>
        )}
        {showInputB && (
