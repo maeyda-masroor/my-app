@@ -1,5 +1,6 @@
+import Checking from './dashboard/contacts/Checking';
 import React, { FC } from 'react';
-import NewContact from './components/NewContact';
+import AddContact from './dashboard/contacts/AddContact';
 import ForgetPassword from './auth/ForgetPassword';
 import {Routes,Route} from 'react-router-dom';
 import Login from './auth/Login';
@@ -22,13 +23,14 @@ function App() {
     <div style={{backgroundColor:'white'}}>
     <Navbar/>
     <Routes>
-      <Route path="/newContact" element={<NewContact />} />
+      <Route path="/AddContact" element={<AddContact />} />
       <Route path='/' element={<Login/>}/>
       <Route path='/forgetPassword' element={<ForgetPassword/>}/>
       <Route path='/termofUse' element={<TermofUse/>}/>
       <Route path='/privacypolicy' element={<PrivacyPolicy/>}/>
       <Route path='/recover' element={<Recover/>}/>
       <Route path='/register' element={<Register/>}/>
+      <Route path='/checking' element={<Checking/>}/>
     </Routes>
     </div>
   );
